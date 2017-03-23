@@ -17,6 +17,9 @@
  * @param {string=} [type=text] Type of the input element. Only 'text', 'email' and 'url' are supported values.
  * @param {string=} [text=NA] Assignable Angular expression for data-binding to the element's text.
  * @param {number=} tabindex Tab order of the control.
+ * @param {string} [inputFieldId=NA] Specific ID of the input control (useful when setting focus across multiple inputs 
+ *    in a form).
+ * @param {number} [inputFieldTabindex=NA] Tab order of the input control; if sepcified overwrite tabindex.
  * @param {string=} [placeholder=Add a tag] Placeholder text for the control.
  * @param {number=} [minLength=3] Minimum length for a new tag.
  * @param {number=} [maxLength=MAX_SAFE_INTEGER] Maximum length allowed for a new tag.
@@ -173,6 +176,8 @@ tagsInput.directive('tagsInput', function($timeout, $document, $window, $q, tags
             onTagRemoving: '&',
             onTagRemoved: '&',
             onTagClicked: '&',
+            inputFieldId: '@',
+            inputFieldTabindex: '@'
         },
         replace: false,
         transclude: true,
@@ -260,6 +265,11 @@ tagsInput.directive('tagsInput', function($timeout, $document, $window, $q, tags
                 setElementValidity,
                 focusInput;
 
+            // Overwrite tabindex option if input-field-tabindex were passed in
+            if (angular.isDefined(scope.inputFieldTabindex)) {
+                scope.options.tabindex = parseInt(scope.inputFieldTabindex, 10); 
+            }
+            
             setElementValidity = function() {
                 ngModelCtrl.$setValidity('maxTags', tagList.items.length <= options.maxTags);
                 ngModelCtrl.$setValidity('minTags', tagList.items.length >= options.minTags);
@@ -284,7 +294,8 @@ tagsInput.directive('tagsInput', function($timeout, $document, $window, $q, tags
                         return scope.text || '';
                     }
                 },
-                invalid: null
+                invalid: null,
+                inputFieldId: scope.inputFieldId || ''
             };
 
             scope.track = function(tag) {
