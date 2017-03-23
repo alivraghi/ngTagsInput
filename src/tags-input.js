@@ -21,7 +21,6 @@
  * @param {string} [inputFieldId=NA] Specific ID of the input control (useful when setting focus across multiple inputs 
  *    in a form).
  * @param {number} [inputFieldTabindex=NA] Tab order of the input control; if sepcified overwrite tabindex.
- * @param {boolean} [validateUntouched=true] Flag indicating that the validation is required on startup.  
  * @param {string=} [placeholder=Add a tag] Placeholder text for the control.
  * @param {number=} [minLength=3] Minimum length for a new tag.
  * @param {number=} [maxLength=MAX_SAFE_INTEGER] Maximum length allowed for a new tag.
