@@ -21,6 +21,7 @@
  * @param {string} [inputFieldId=NA] Specific ID of the input control (useful when setting focus across multiple inputs 
  *    in a form).
  * @param {number} [inputFieldTabindex=NA] Tab order of the input control; if sepcified overwrite tabindex.
+ * @param {boolean} [validateUntouched=true] Flag indicating that the validation is required on startup.  
  * @param {string=} [placeholder=Add a tag] Placeholder text for the control.
  * @param {number=} [minLength=3] Minimum length for a new tag.
  * @param {number=} [maxLength=MAX_SAFE_INTEGER] Maximum length allowed for a new tag.
@@ -182,7 +183,8 @@ tagsInput.directive('tagsInput', function($timeout, $document, $window, $q, tags
             onTagRemoved: '&',
             onTagClicked: '&',
             inputFieldId: '@',
-            inputFieldTabindex: '@'
+            inputFieldTabindex: '@',
+            validateUntouched: '@'
         },
         replace: false,
         transclude: true,
@@ -214,7 +216,8 @@ tagsInput.directive('tagsInput', function($timeout, $document, $window, $q, tags
                 allowLeftoverText: [Boolean, false],
                 addFromAutocompleteOnly: [Boolean, false],
                 spellcheck: [Boolean, true],
-                useStrings: [Boolean, false]
+                useStrings: [Boolean, false],
+                validateUntouched: [Boolean, true]
             });
 
             $scope.tagList = new TagList($scope.options, $scope.events,
@@ -277,6 +280,10 @@ tagsInput.directive('tagsInput', function($timeout, $document, $window, $q, tags
             }
             
             setElementValidity = function() {
+            	// Prevents $error setting on startup
+                if (!scope.options.validateUntouched && ngModelCtrl.$untouched) {
+            	    return;
+                }
                 ngModelCtrl.$setValidity('maxTags', tagList.items.length <= options.maxTags);
                 ngModelCtrl.$setValidity('minTags', tagList.items.length >= options.minTags);
                 ngModelCtrl.$setValidity('leftoverText', scope.hasFocus || options.allowLeftoverText ? true : !scope.newTag.text());
