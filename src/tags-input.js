@@ -17,6 +17,7 @@
  * @param {string=} [keyProperty=text] Property to be used as a unique identifier for the tag.
  * @param {string=} [type=text] Type of the input element. Only 'text', 'email' and 'url' are supported values.
  * @param {string=} [text=NA] Assignable Angular expression for data-binding to the element's text.
+ * @param {boolean} [validateUntouched=true] Flag indicating that the validation is required on startup.  
  * @param {number=} tabindex Tab order of the control.
  * @param {string} [inputFieldId=NA] Specific ID of the input control (useful when setting focus across multiple inputs 
  *    in a form).
