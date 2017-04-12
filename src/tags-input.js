@@ -178,11 +178,17 @@ tagsInput.directive('tagsInput', function($timeout, $document, $window, $q, tags
             onTagRemoved: '&',
             onTagClicked: '&',
 <<<<<<< HEAD
+<<<<<<< HEAD
             inputFieldId: '@',
             inputFieldTabindex: '@'
 =======
             validateUntouched: '@'
 >>>>>>> 3ac6ca1... feat(tagsInput): Option not to validate an "untouched" control
+=======
+            inputFieldId: '@',
+            inputFieldTabindex: '@',
+            validateUntouched: '@'
+>>>>>>> ca124be823ae35a2ba574580d7b450d8710d2b75
         },
         replace: false,
         transclude: true,
